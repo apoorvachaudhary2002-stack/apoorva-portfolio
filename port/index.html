@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apoorva Chaudhary — UX Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #faf7f2;
+    --warm: #f2ece0;
+    --blush: #e8c9b8;
+    --rose: #c97b63;
+    --mauve: #9b7b8a;
+    --deep: #3d2e35;
+    --text: #4a3840;
+    --muted: #9a8a90;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 60px;
+    background: rgba(250,247,242,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,170,155,0.2);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; letter-spacing: 0.02em;
+    color: var(--deep); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--rose); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232,201,184,0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -50px; left: 200px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(155,123,138,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rose); font-weight: 500;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--rose);
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 80px);
+    font-weight: 300; line-height: 1.05;
+    color: var(--deep); letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+  .hero-name em { font-style: italic; color: var(--rose); }
+  .hero-desc {
+    font-size: 16px; line-height: 1.8; color: var(--muted);
+    max-width: 420px; font-weight: 300;
+    margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--deep); color: var(--cream);
+    border: none; border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--rose); transform: translateY(-2px); }
+  .btn-outline {
+    padding: 14px 32px;
+    background: transparent; color: var(--deep);
+    border: 1.5px solid rgba(61,46,53,0.25); border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s, transform 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--rose); color: var(--rose); transform: translateY(-2px); }
+
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; animation: fadeIn 1.2s ease forwards 0.5s;
+  }
+  .hero-blob {
+    width: 380px; height: 420px;
+    background: linear-gradient(135deg, var(--warm) 0%, var(--blush) 60%, rgba(201,123,99,0.3) 100%);
+    border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: blobFloat 6s ease-in-out infinite;
+  }
+  .hero-blob-inner {
+    width: 280px; height: 300px;
+    background: var(--white);
+    border-radius: 50% 50% 45% 55% / 55% 45% 55% 45%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
+    box-shadow: 0 20px 60px rgba(61,46,53,0.08);
+  }
+  .blob-tag {
+    background: var(--warm); padding: 6px 16px; border-radius: 20px;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--rose); font-weight: 500;
+  }
+  .blob-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 400; color: var(--deep);
+    text-align: center; line-height: 1.2;
+  }
+  .blob-dots {
+    display: flex; gap: 6px; margin-top: 4px;
+  }
+  .blob-dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blush);
+  }
+  .blob-dots span:nth-child(2) { background: var(--rose); }
+  .blob-dots span:nth-child(3) { background: var(--mauve); opacity: 0.5; }
+
+  .float-pill {
+    position: absolute;
+    background: var(--white);
+    border-radius: 30px; padding: 10px 18px;
+    box-shadow: 0 8px 30px rgba(61,46,53,0.1);
+    font-size: 12px; color: var(--text); font-weight: 400;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .float-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .pill-1 { top: 30px; left: -20px; animation: floatPill1 4s ease-in-out infinite; }
+  .pill-2 { bottom: 60px; right: -30px; animation: floatPill2 5s ease-in-out infinite; }
+  .pill-3 { top: 50%; left: -50px; animation: floatPill3 4.5s ease-in-out infinite; }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 120px 60px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .about-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--rose); font-weight: 500; margin-bottom: 20px;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300; line-height: 1.2;
+    color: var(--deep); margin-bottom: 28px;
+  }
+  .about-heading em { font-style: italic; }
+  .about-body {
+    font-size: 15px; line-height: 1.9; color: var(--muted);
+    font-weight: 300; margin-bottom: 40px;
+  }
+  .skills-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .skill-chip {
+    background: var(--warm); border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px; color: var(--text); font-weight: 400;
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(200,170,155,0.3);
+    transition: background 0.3s;
+  }
+  .skill-chip:hover { background: var(--blush); }
+  .skill-chip .icon { font-size: 16px; }
+  .about-stats {
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .stat-card {
+    background: var(--white); border-radius: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 30px rgba(61,46,53,0.06);
+    border: 1px solid rgba(200,170,155,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(61,46,53,0.1); }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; color: var(--rose);
+    line-height: 1;
+  }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 6px; letter-spacing: 0.04em; }
+  .stat-bar { height: 3px; background: var(--warm); border-radius: 2px; margin-top: 16px; overflow: hidden; }
+  .stat-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--mauve)); border-radius: 2px; }
+
+  /* ── WORK ── */
+  .work {
+    padding: 100px 60px;
+    background: var(--warm);
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 60px;
+  }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--rose); font-weight: 500; margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300; color: var(--deep); line-height: 1.1;
+  }
+  .section-heading em { font-style: italic; }
+  .section-note { font-size: 13px; color: var(--muted); max-width: 200px; text-align: right; line-height: 1.6; }
+
+  .cases-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .case-card {
+    background: var(--white); border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(61,46,53,0.06);
+    transition: transform 0.4s, box-shadow 0.4s;
+    cursor: pointer;
+    border: 1px solid rgba(200,170,155,0.15);
+  }
+  .case-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(61,46,53,0.12); }
+  .case-card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
+  .case-visual {
+    height: 220px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .case-card.featured .case-visual { height: auto; min-height: 300px; }
+  .cv-1 { background: linear-gradient(135deg, #f5e6d8 0%, #e8c4a8 100%); }
+  .cv-2 { background: linear-gradient(135deg, #e8d5e8 0%, #c9a8d0 100%); }
+  .cv-3 { background: linear-gradient(135deg, #d5e8e4 0%, #a8c8c0 100%); }
+  .cv-4 { background: linear-gradient(135deg, #e8e0d5 0%, #c8b898 100%); }
+
+  .mock-screen {
+    width: 160px; background: white; border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    overflow: hidden; transform: rotate(-2deg);
+    transition: transform 0.4s;
+  }
+  .case-card:hover .mock-screen { transform: rotate(0deg) scale(1.05); }
+  .mock-bar { height: 32px; background: var(--warm); display: flex; align-items: center; padding: 0 12px; gap: 6px; }
+  .mock-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .mock-lines { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .mock-line { height: 6px; border-radius: 3px; background: var(--warm); }
+  .mock-line.short { width: 60%; }
+  .mock-line.accent { background: var(--blush); }
+
+  .case-body { padding: 28px 32px; }
+  .case-card.featured .case-body { padding: 48px 40px; display: flex; flex-direction: column; justify-content: center; }
+  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .case-tag {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 20px;
+    background: var(--warm); color: var(--mauve); font-weight: 500;
+  }
+  .case-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 400; color: var(--deep);
+    line-height: 1.2; margin-bottom: 12px;
+  }
+  .case-card.featured .case-title { font-size: 36px; margin-bottom: 16px; }
+  .case-desc {
+    font-size: 14px; line-height: 1.7; color: var(--muted);
+    font-weight: 300; margin-bottom: 24px;
+  }
+  .case-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--rose);
+    text-decoration: none; transition: gap 0.3s;
+  }
+  .case-link:hover { gap: 14px; }
+  .case-link::after { content: '→'; }
+
+  /* ── PROCESS ── */
+  .process { padding: 120px 60px; }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px; margin-top: 60px;
+  }
+  .step-card {
+    padding: 36px 28px;
+    border-radius: 20px; border: 1.5px solid rgba(200,170,155,0.3);
+    transition: background 0.3s, transform 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .step-card:hover {
+    background: var(--white);
+    transform: translateY(-6px);
+    border-color: var(--blush);
+    box-shadow: 0 12px 40px rgba(61,46,53,0.08);
+  }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px; font-weight: 300;
+    color: var(--blush); line-height: 1;
+    margin-bottom: 20px;
+  }
+  .step-title {
+    font-size: 15px; font-weight: 500; color: var(--deep);
+    margin-bottom: 10px;
+  }
+  .step-desc { font-size: 13px; line-height: 1.7; color: var(--muted); font-weight: 300; }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding: 120px 60px;
+    background: var(--deep); color: var(--cream);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(201,123,99,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contact-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--rose); font-weight: 500; margin-bottom: 20px;
+  }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 4vw, 60px);
+    font-weight: 300; line-height: 1.1; margin-bottom: 24px;
+    color: var(--cream);
+  }
+  .contact-heading em { font-style: italic; color: var(--blush); }
+  .contact-sub { font-size: 15px; line-height: 1.8; color: rgba(250,247,242,0.5); font-weight: 300; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 1; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250,247,242,0.4); }
+  .form-input {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 14px 18px;
+    color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 14px;
+    outline: none; transition: border-color 0.3s, background 0.3s;
+  }
+  .form-input::placeholder { color: rgba(250,247,242,0.25); }
+  .form-input:focus { border-color: var(--rose); background: rgba(255,255,255,0.09); }
+  textarea.form-input { resize: none; height: 110px; }
+  .form-btn {
+    margin-top: 8px; padding: 16px;
+    background: var(--rose); color: white;
+    border: none; border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .form-btn:hover { background: #b86c52; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 60px;
+    background: var(--deep);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 13px; color: rgba(250,247,242,0.3); }
+  .social-links { display: flex; gap: 20px; }
+  .social-links a {
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(250,247,242,0.3); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .social-links a:hover { color: var(--blush); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes blobFloat {
+    0%, 100% { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; transform: translateY(0); }
+    50% { border-radius: 45% 55% 45% 55% / 55% 45% 55% 45%; transform: translateY(-14px); }
+  }
+  @keyframes floatPill1 {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+  }
+  @keyframes floatPill2 {
+    0%, 100% { transform: translateY(0) rotate(3deg); }
+    50% { transform: translateY(-8px) rotate(-1deg); }
+  }
+  @keyframes floatPill3 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 28px; }
+    .nav-links { gap: 20px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 28px 60px; gap: 60px; }
+    .hero-visual { display: none; }
+    .about { grid-template-columns: 1fr; padding: 80px 28px; gap: 48px; }
+    .work { padding: 80px 28px; }
+    .cases-grid { grid-template-columns: 1fr; }
+    .case-card.featured { grid-column: 1; display: block; }
+    .case-card.featured .case-visual { min-height: 220px; }
+    .process { padding: 80px 28px; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .contact { grid-template-columns: 1fr; padding: 80px 28px; gap: 48px; }
+    footer { padding: 24px 28px; flex-direction: column; gap: 16px; text-align: center; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .section-note { text-align: left; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Apoorva C.</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">UX Designer</div>
+    <h1 class="hero-name">
+      Designing<br><em>experiences</em><br>people love
+    </h1>
+    <p class="hero-desc">
+      Hi, I'm Apoorva — a UX designer who believes great design starts with listening. I craft thoughtful, research-driven experiences that solve real human problems.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View my work</a>
+      <a href="#contact" class="btn-outline">Say hello</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-blob">
+      <div class="hero-blob-inner">
+        <div class="blob-tag">UX Design</div>
+        <div class="blob-title">Human<br>Centered</div>
+        <div class="blob-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="float-pill pill-1">
+        <span class="dot" style="background:#c97b63"></span>
+        User Research
+      </div>
+      <div class="float-pill pill-2">
+        <span class="dot" style="background:#9b7b8a"></span>
+        Wireframing
+      </div>
+      <div class="float-pill pill-3">
+        <span class="dot" style="background:#a8c8c0"></span>
+        Prototyping
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-heading">Case <em>studies</em></h2>
+    </div>
+    <p class="section-note">Each project tells a story of people, problems & solutions.</p>
+  </div>
+
+  <div class="cases-grid">
+
+    <!-- Featured -->
+    <div class="case-card featured reveal reveal-delay-1">
+      <div class="case-visual cv-1">
+        <div class="mock-screen">
+          <div class="mock-bar">
+            <span class="mock-dot" style="background:#e8c9b8"></span>
+            <span class="mock-dot" style="background:#c97b63"></span>
+            <span class="mock-dot" style="background:#9b7b8a"></span>
+          </div>
+          <div class="mock-lines">
+            <div class="mock-line"></div>
+            <div class="mock-line short accent"></div>
+            <div class="mock-line"></div>
+            <div class="mock-line short"></div>
+            <div class="mock-line accent"></div>
+            <div class="mock-line"></div>
+            <div class="mock-line short"></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-tags">
+          <span class="case-tag">Mobile App</span>
+          <span class="case-tag">End-to-End</span>
+          <span class="case-tag">Research</span>
+        </div>
+        <h3 class="case-title">Redesigning a food delivery app for first-time users</h3>
+        <p class="case-desc">Conducted 8 user interviews, identified key drop-off points, and redesigned the onboarding flow — reducing friction by simplifying choices and adding contextual guidance.</p>
+        <a href="#" class="case-link">Read case study</a>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="case-card reveal reveal-delay-2">
+      <div class="case-visual cv-2">
+        <div class="mock-screen" style="transform:rotate(2deg)">
+          <div class="mock-bar">
+            <span class="mock-dot" style="background:#e8d5e8"></span>
+            <span class="mock-dot" style="background:#c9a8d0"></span>
+          </div>
+          <div class="mock-lines">
+            <div class="mock-line" style="background:#e8d5e8"></div>
+            <div class="mock-line short" style="background:#c9a8d0"></div>
+            <div class="mock-line" style="background:#e8d5e8"></div>
+            <div class="mock-line short" style="background:#c9a8d0"></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-tags">
+          <span class="case-tag">Dashboard</span>
+          <span class="case-tag">B2B</span>
+        </div>
+        <h3 class="case-title">Simplifying a healthcare patient portal</h3>
+        <p class="case-desc">Mapped user journeys for elderly patients and redesigned the information architecture to reduce cognitive load.</p>
+        <a href="#" class="case-link">Read case study</a>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="case-card reveal reveal-delay-3">
+      <div class="case-visual cv-3">
+        <div class="mock-screen">
+          <div class="mock-bar">
+            <span class="mock-dot" style="background:#d5e8e4"></span>
+            <span class="mock-dot" style="background:#a8c8c0"></span>
+          </div>
+          <div class="mock-lines">
+            <div class="mock-line" style="background:#d5e8e4"></div>
+            <div class="mock-line short" style="background:#a8c8c0"></div>
+            <div class="mock-line" style="background:#d5e8e4"></div>
+            <div class="mock-line short" style="background:#a8c8c0"></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-tags">
+          <span class="case-tag">E-commerce</span>
+          <span class="case-tag">Usability Testing</span>
+        </div>
+        <h3 class="case-title">Checkout flow redesign for a small clothing brand</h3>
+        <p class="case-desc">Identified 3 critical pain points through usability testing and iterated designs to reduce cart abandonment.</p>
+        <a href="#" class="case-link">Read case study</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="reveal">
+    <div class="about-label">About me</div>
+    <h2 class="about-heading">Curious designer,<br><em>empathetic listener</em></h2>
+    <p class="about-body">
+      I'm Apoorva Chaudhary, a self-taught UX designer based in India. I started this journey because I believe technology should feel human. My process always begins with people — understanding their frustrations, motivations, and goals before I ever open Figma.
+      <br><br>
+      When I'm not designing, I'm sketching ideas in my journal, exploring new apps to critique, or reading about cognitive psychology.
+    </p>
+    <div class="skills-grid">
+      <div class="skill-chip"><span class="icon">🔍</span> User Research</div>
+      <div class="skill-chip"><span class="icon">🗺️</span> Journey Mapping</div>
+      <div class="skill-chip"><span class="icon">✏️</span> Wireframing</div>
+      <div class="skill-chip"><span class="icon">🎨</span> Figma</div>
+      <div class="skill-chip"><span class="icon">🧪</span> Usability Testing</div>
+      <div class="skill-chip"><span class="icon">📐</span> Prototyping</div>
+    </div>
+  </div>
+
+  <div class="about-stats reveal reveal-delay-2">
+    <div class="stat-card">
+      <div class="stat-num">3+</div>
+      <div class="stat-label">UX case studies completed</div>
+      <div class="stat-bar"><div class="stat-fill" style="width:60%"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">User interviews conducted</div>
+      <div class="stat-bar"><div class="stat-fill" style="width:75%"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Curiosity for human behavior</div>
+      <div class="stat-bar"><div class="stat-fill" style="width:100%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">How I work</div>
+      <h2 class="section-heading">My design <em>process</em></h2>
+    </div>
+  </div>
+
+  <div class="process-steps">
+    <div class="step-card reveal reveal-delay-1">
+      <div class="step-num">01</div>
+      <div class="step-title">Empathize</div>
+      <p class="step-desc">Talk to real users. Understand their world, frustrations, and what success looks like to them.</p>
+    </div>
+    <div class="step-card reveal reveal-delay-2">
+      <div class="step-num">02</div>
+      <div class="step-title">Define</div>
+      <p class="step-desc">Synthesize insights into a clear problem statement. Who are we designing for and what do they need?</p>
+    </div>
+    <div class="step-card reveal reveal-delay-3">
+      <div class="step-num">03</div>
+      <div class="step-title">Design</div>
+      <p class="step-desc">Sketch, wireframe, and prototype. Explore many ideas before committing to the right one.</p>
+    </div>
+    <div class="step-card reveal reveal-delay-4">
+      <div class="step-num">04</div>
+      <div class="step-title">Test</div>
+      <p class="step-desc">Put the design in front of real users. Learn fast, iterate faster. Repeat until it's right.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <div class="contact-label">Get in touch</div>
+    <h2 class="contact-heading">Let's create<br>something <em>together</em></h2>
+    <p class="contact-sub">Open to internships, junior roles, and freelance projects. I'd love to hear about what you're building.</p>
+  </div>
+
+  <form class="contact-form reveal reveal-delay-2" onsubmit="handleSubmit(event)">
+    <div class="form-group">
+      <label class="form-label">Your name</label>
+      <input class="form-input" type="text" placeholder="What should I call you?" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" placeholder="your@email.com" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-input" placeholder="Tell me about the opportunity or project…" required></textarea>
+    </div>
+    <button class="form-btn" type="submit">Send message</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Apoorva Chaudhary. Designed with care.</p>
+  <div class="social-links">
+    <a href="#">LinkedIn</a>
+    <a href="#">Behance</a>
+    <a href="#">Email</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-btn');
+    btn.textContent = 'Message sent ✓';
+    btn.style.background = '#6b9e8a';
+    setTimeout(() => {
+      btn.textContent = 'Send message';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+</body>
+</html>
